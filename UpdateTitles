@@ -1,0 +1,19 @@
+<#
+Script to update titles using a CSV file
+#>
+
+  
+    $users = Import-Csv -Path $PSScriptRoot\titles.csv  #creates users variable also path to csv that contains list of titles and PSScriptRoot denotes directory where .ps1 is located
+
+    foreach($user in $users){
+
+        $ADUser = Get-ADUser -Filter "userprincipalname -eq '$($user.'email address')'"  #pulls all users using userprincipalname and sorts them according to entries under email address in the csv above
+
+    if ($ADUser){
+        Set-ADUser -Identity $ADUser -Title $user.'primary title'  #updates user in AD according to text under primarytitle in the csv mentioned earlier
+    
+    }
+    
+    else{
+        Write-Warning ("Failed to update " + $($user.name))
+    }
