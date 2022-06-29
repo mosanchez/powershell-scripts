@@ -1,0 +1,5 @@
+#Pulls list of all users and sorts the output to a CSV file
+
+Get-Mailbox -ResultSize Unlimited |
+Select-Object DisplayName,PrimarySmtpAddress, @{Name="AliasSmtpAddresses";Expression={($_.EmailAddresses | Where-Object {$_ -clike "smtp:*"} | ForEach-Object {$_ -replace "smtp:",""}) -join "," }}  |
+Export-Csv "$PSScriptRoot\Email-Addresses.csv" -NoTypeInformation -Encoding UTF8
