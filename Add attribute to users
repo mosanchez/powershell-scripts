@@ -1,0 +1,19 @@
+# Pulls users from a specified CSV file and matches UPN from the file
+# If UPN match is found the script will then add example to extensionAttribute1 in AD
+# Script was used to add users to a dynamic distribution list
+
+$users = Import-Csv -Path $PSScriptRoot\users.csv
+
+    foreach($user in $users){
+
+        $ADUser = Get-ADUser -Filter "userprincipalname -eq '$($user.userprincipalname)'"
+
+    if ($ADUser){
+        Set-ADUser -Identity $ADUser -Add @{extensionAttribute1 = 'example'}
+    
+    }
+    
+    else{
+        Write-Warning ("Failed to update " + $($user.name))
+    }
+}
