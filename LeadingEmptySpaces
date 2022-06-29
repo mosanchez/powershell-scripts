@@ -1,0 +1,12 @@
+# Script is used to remove leading or empty spaces from a CSV file
+
+# Import the data from CSV file and assign it to variable. Place CSV in root of folder where script is run from
+$Csv = Import-Csv "$PSScriptRoot\example.csv"
+
+# Get rid of leading/empty spaces
+$Csv | Foreach-Object {
+    $_.PSObject.Properties | Foreach-Object { $_.Value = $_.Value.Trim() }  
+}
+
+# Export CSV to folder where this script was run
+$Csv | Export-Csv $PSScriptRoot\example-sorted.csv -NoTypeInformation
