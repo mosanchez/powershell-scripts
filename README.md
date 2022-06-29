@@ -1,1 +1,2 @@
-# Collection of PowerShell scripts used for some sysadmin work 
+# PowerShell Scripts 
+  These scripts were used for some sysadmin work, primarily pulling values from AD OUs, groups, etc
